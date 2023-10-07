@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -58,17 +59,22 @@ public class MoveSpaceShip : MonoBehaviour
             inputed = true;
             desiredVel = rb.velocity - transform.forward * accelerationValue;
         }
-
-        if (rightInput != Vector2.zero || leftInput != Vector2.zero)
+        
+        if (Input.GetKey(KeyCode.D))
         {
-            if(actualCoroutine != null) StopCoroutine(actualCoroutine);
             inputed = true;
-            
+            desiredRot = rb.rotation.eulerAngles + new Vector3(0,Time.deltaTime * 10,0);
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+           
+            inputed = true;
+            desiredRot = rb.rotation.eulerAngles - new Vector3(0,Time.deltaTime * 10,0);
         }
         
-        
         if(inputed)
-            rb.velocity = ClampVelocity(desiredVel);
+            rb.MoveRotation(quaternion.Euler(desiredRot));
+        
         else
         {
             if (actualCoroutine != null)
