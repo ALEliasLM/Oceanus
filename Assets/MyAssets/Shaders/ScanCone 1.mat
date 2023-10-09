@@ -44,7 +44,7 @@ Material:
     m_Floats:
     - _JitteringFloat: 0.6
     - _JitteringLevel: 0.7
-    - _NoiseStrength: 5
+    - _NoiseStrength: 0
     - _NoiseWaves: 1
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -54,8 +54,8 @@ Material:
     - _ColorOne: {r: 0.28403184, g: 1.4556422, b: 0.10299354, a: 1}
     - _ColorRange: {r: -3, g: 4, b: 0, a: 0}
     - _ColorTwo: {r: 0, g: 2.9960783, b: 1.0102901, a: 1}
-    - _TilingStripesSpeed: {r: 0, g: 0.5, b: 0, a: 0}
-    - _TillingStripesOne: {r: 1, g: 0, b: 0, a: 0}
+    - _TilingStripesSpeed: {r: 0, g: 0.3, b: 0, a: 0}
+    - _TillingStripesOne: {r: 0, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &221873780358309823
 MonoBehaviour:

@@ -23,7 +23,7 @@ public class AI_Spectrum : MonoBehaviour
     private OpenAIApi openAI = new();
     List<ChatMessage> messages = new List<ChatMessage>();
     private bool firstAwnser = true;
-
+    private static List<string> newMessages = new(); 
     public string tex = "After all, who needs an elegance manual when you're the hammerhead shark? A true example of \"be yourself,\" even if it means having a somewhat... unique appearance.";
 
 
@@ -43,16 +43,14 @@ public class AI_Spectrum : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(ReadMessages());
         speaker = GetComponentInChildren<TTSSpeaker>();
         print(GetInstructions(""));
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)) {
-            speaker.Speak(tex);
-
-        }
+        
     }
     private string GetInstructions(string newText)
     {
@@ -145,6 +143,20 @@ public class AI_Spectrum : MonoBehaviour
 
     public static void LaraTalkShow(string text)
     {
-        speaker.Speak(text);
+        newMessages.Add(text);
+    }
+
+    IEnumerator ReadMessages()
+    {
+        while (true)
+        {
+            if (newMessages.Count > 0 && !speaker.IsSpeaking)
+            {
+                speaker.Speak(newMessages[0]);
+                newMessages.Remove(newMessages[0]);
+            }
+
+            yield return null;
+        }
     }
 }

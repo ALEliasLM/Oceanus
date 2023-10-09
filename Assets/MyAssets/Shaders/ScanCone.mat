@@ -51,9 +51,9 @@ Material:
     - _TestColorLerp: 0
     - _TestLerpValue: 0
     m_Colors:
-    - _ColorOne: {r: 0.28403184, g: 1.4556422, b: 0.10299354, a: 1}
+    - _ColorOne: {r: 0.14615229, g: 0.7490197, b: 0.05299667, a: 1}
     - _ColorRange: {r: -3, g: 4, b: 0, a: 0}
-    - _ColorTwo: {r: 0, g: 2.9960783, b: 1.0102901, a: 1}
+    - _ColorTwo: {r: 0, g: 0.7490196, b: 0.25257257, a: 1}
     - _TilingStripesSpeed: {r: 0, g: 0.5, b: 0, a: 0}
     - _TillingStripesOne: {r: 0, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
