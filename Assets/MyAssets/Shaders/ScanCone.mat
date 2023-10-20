@@ -54,8 +54,8 @@ Material:
     - _ColorOne: {r: 0.14615229, g: 0.7490197, b: 0.05299667, a: 1}
     - _ColorRange: {r: -3, g: 4, b: 0, a: 0}
     - _ColorTwo: {r: 0, g: 0.7490196, b: 0.25257257, a: 1}
-    - _TilingStripesSpeed: {r: 0, g: 0.5, b: 0, a: 0}
-    - _TillingStripesOne: {r: 0, g: 1, b: 0, a: 0}
+    - _TilingStripesSpeed: {r: 0.1, g: 0, b: 0, a: 0}
+    - _TillingStripesOne: {r: 0.1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &221873780358309823
 MonoBehaviour:

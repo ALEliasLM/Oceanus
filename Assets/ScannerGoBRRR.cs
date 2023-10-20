@@ -27,26 +27,7 @@ public class ScannerGoBRRR : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (input.action.ReadValue<float>() > .6f || Input.GetKey(KeyCode.Space))
-        {
-            _collider.enabled = true;
-            _mesh.enabled = true;
-            _intersection.SetActive(true);
-            if (!played)
-            {
-                played = true;
-                anim.enabled = true;
-                anim.Play("New Animation",1,0);
-            }
-        }
-        else
-        {
-            played = false;
-            _collider.enabled = false;
-            _mesh.enabled = false;
-            _intersection.SetActive(false);
-            anim.enabled = false;
-        }
+
     }
 
     private void OnTriggerEnter(Collider other)

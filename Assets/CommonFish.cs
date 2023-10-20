@@ -8,7 +8,7 @@ public class CommonFish : LifeForm
     public float swimSpeed = 2.0f;
     public float rotationSpeed = 2.0f;
 
-    [SerializeField] Transform biomaArea;
+    public Transform biomaArea;
     [SerializeField] Vector3 targetPosition;
 
     private Rigidbody rb;
@@ -32,8 +32,9 @@ public class CommonFish : LifeForm
     
     private void MoveTowardsTarget()
     {
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetPosition - transform.position), rotationSpeed * Time.deltaTime);
-        rb.velocity = transform.forward * swimSpeed;
+        rb.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetPosition - transform.position), rotationSpeed * Time.deltaTime);
+        var distance = targetPosition - transform.position;
+        rb.velocity = distance.normalized * swimSpeed;
 
         // Verificar se o peixe está perto do destino
         if (Vector3.Distance(transform.position, targetPosition) < 1.0f)
@@ -42,12 +43,12 @@ public class CommonFish : LifeForm
         }
     }
 
-    private void SetRandomTarget()
+    void SetRandomTarget()
     {
         // Definir um novo destino aleatório dentro da área do bioma
-        float randomX = Random.Range(biomaArea.position.x - biomaArea.localScale.x / 2 +12, biomaArea.position.x + biomaArea.localScale.x / 2 - 12);
-        float randomY = Random.Range(biomaArea.position.y - biomaArea.localScale.y / 2 +12, biomaArea.position.y + biomaArea.localScale.y / 2 - 12);
-        float randomZ = Random.Range(biomaArea.position.z - biomaArea.localScale.z / 2 +12, biomaArea.position.z + biomaArea.localScale.z / 2 - 12);
+        float randomX = Random.Range(biomaArea.position.x - biomaArea.localScale.x / 2 , biomaArea.position.x + biomaArea.localScale.x / 2 );
+        float randomY = Random.Range(biomaArea.position.y - biomaArea.localScale.y / 2 , biomaArea.position.y + biomaArea.localScale.y / 2);
+        float randomZ = Random.Range(biomaArea.position.z - biomaArea.localScale.z / 2 , biomaArea.position.z + biomaArea.localScale.z / 2);
         
         //print(randomX+" "+ randomY+" "+ randomZ);
         targetPosition = new Vector3(randomX, randomY, randomZ);
@@ -55,30 +56,11 @@ public class CommonFish : LifeForm
 
     private void OnCollisionEnter(Collision other)
     {
-        SetRandomTarget();
+        
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        
+        SetRandomTarget();
+        MoveTowardsTarget();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.name == "RAM")
-        {
-            targetPosition = transform.position + other.transform.forward * 3;
-            targetPosition.y = transform.position.y + Random.Range(-4,4);
-            this.swimSpeed *= 5;
-            this.rotationSpeed *= 5;
-        }
-    }
-    
-    
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.name == "RAM")
-        {
-            this.swimSpeed /= 5;
-            this.rotationSpeed /= 5;
-        }
-    }
 }

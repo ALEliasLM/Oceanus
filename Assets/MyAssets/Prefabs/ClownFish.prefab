@@ -154,9 +154,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1990500970224495511}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 16.7, y: -12.49, z: 4.25}
-  m_LocalScale: {x: 15, y: 15, z: 15}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4662782189693504941}
@@ -211,9 +211,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 64
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &7008214056693189394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,7 +232,7 @@ MonoBehaviour:
   scanProgress: 0
   onScan: 0
   swimSpeed: 2
-  rotationSpeed: 2
+  rotationSpeed: 3
   biomaArea: {fileID: 0}
   targetPosition: {x: 0, y: 0, z: 0}
 --- !u!136 &662821515426225143
