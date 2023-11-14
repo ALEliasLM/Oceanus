@@ -8,7 +8,6 @@ public class HingeActionManager : MonoBehaviour
 {
     public GameObject hingeObject;
     public float AngleOffset = 2f;
-    public TextMeshProUGUI text;
 
     public bool grabbed = false;
     HingeJoint joint;
@@ -17,6 +16,9 @@ public class HingeActionManager : MonoBehaviour
     public UnityEvent OnMinValue;
     public UnityEvent onBetweenValues;
     public UnityEvent OnMaxValue;
+
+    public FishInventory inventory;
+
 
     // Update is called once per frame
 
@@ -29,7 +31,6 @@ public class HingeActionManager : MonoBehaviour
     void Update()
     {
         if (!grabbed) return;
-
         if (joint.angle <= min + AngleOffset)
         {
             OnMinValue?.Invoke();

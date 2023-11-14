@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,13 +9,32 @@ public class CommonFish : LifeForm
     public float swimSpeed = 2.0f;
     public float rotationSpeed = 2.0f;
 
-    public Transform biomaArea;
-    [SerializeField] Vector3 targetPosition;
+    //o que eu quero que tenha? Waypoints para ser alvo em determinados momentos, uma forma aleatoria de se mexer pelos pontos
+    public bool randomizeStart = false;
+    public List<Vector3> waypoints; //o primeiro deve ser um canto que o peixe trata como casa ou abrigo, o segundo um lugar para se alimentar e o terceiro eh aleatorio
+    public List<Vector3> lastwaypoints; //o primeiro deve ser um canto que o peixe trata como casa ou abrigo, o segundo um lugar para se alimentar e o terceiro eh aleatorio
+
+    public Vector3 targetLocation;
+
+    public AStarMesh mesh;
 
     private Rigidbody rb;
+
+    bool grabbed = false;
     void Start()
     {
-        SetRandomTarget();
+        lastwaypoints = new();
+        if(randomizeStart)
+        {
+            Vector3 start = mesh.Points[Random.Range(0, mesh.Points.Count - 1)];
+            while (start.x < 0) start = mesh.Points[Random.Range(0, mesh.Points.Count - 1)];
+            transform.position = start;
+        }
+        else
+        {
+            transform.position = waypoints[0];
+        }
+        targetLocation = transform.position;
         rb = GetComponent<Rigidbody>();
     }
 
@@ -22,45 +42,33 @@ public class CommonFish : LifeForm
     void Update()
     {
         base.Update();
-        
-        MoveTowardsTarget();
 
-        var rot = transform.localEulerAngles;
-        rot.z = 0;
-        transform.localEulerAngles = rot;
-    }
-    
-    private void MoveTowardsTarget()
-    {
-        rb.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetPosition - transform.position), rotationSpeed * Time.deltaTime);
-        var distance = targetPosition - transform.position;
-        rb.velocity = distance.normalized * swimSpeed;
+        if (grabbed) return;
 
-        // Verificar se o peixe está perto do destino
-        if (Vector3.Distance(transform.position, targetPosition) < 1.0f)
+        if(rb.angularVelocity.magnitude > 1f)
         {
-            SetRandomTarget();
+            rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, Vector3.zero, Time.deltaTime* rotationSpeed);
+            return;
         }
-    }
 
-    void SetRandomTarget()
-    {
-        // Definir um novo destino aleatório dentro da área do bioma
-        float randomX = Random.Range(biomaArea.position.x - biomaArea.localScale.x / 2 , biomaArea.position.x + biomaArea.localScale.x / 2 );
-        float randomY = Random.Range(biomaArea.position.y - biomaArea.localScale.y / 2 , biomaArea.position.y + biomaArea.localScale.y / 2);
-        float randomZ = Random.Range(biomaArea.position.z - biomaArea.localScale.z / 2 , biomaArea.position.z + biomaArea.localScale.z / 2);
+
+        if (Vector3.Distance(targetLocation, transform.position) <= .1f)
+        {
+            rb.velocity = Vector3.zero;
+            lastwaypoints.Add(targetLocation);
+            //nao temos pra onde ir, devemos pegar uma localizacao aleatoria
+            targetLocation = mesh.GetNewRandomDirection(targetLocation);
+        }
+        else
+        {
+            rb.velocity = (targetLocation - transform.position).normalized * swimSpeed * Time.deltaTime;
+            rb.rotation = Quaternion.Lerp(rb.rotation, Quaternion.LookRotation(targetLocation- transform.position), Time.deltaTime * rotationSpeed);
+        }
         
-        //print(randomX+" "+ randomY+" "+ randomZ);
-        targetPosition = new Vector3(randomX, randomY, randomZ);
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnCollisionEnter(Collision collision)
     {
         
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-        SetRandomTarget();
-        MoveTowardsTarget();
     }
-
 }
