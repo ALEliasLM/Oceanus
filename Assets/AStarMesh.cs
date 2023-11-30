@@ -53,7 +53,7 @@ public class AStarMesh : MonoBehaviour
         {
             for (int ii = 0; ii < Depth; ii++)
             {
-                var pos = new Vector3(ii, Height, i);
+                var pos = new Vector3(ii, Height, i) + transform.position;
 
                 var go = visualize ? Instantiate(DebugObject, pos, Quaternion.identity, transform) : null;
                 if (go != null)

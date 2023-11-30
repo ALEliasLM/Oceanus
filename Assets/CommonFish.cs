@@ -21,10 +21,12 @@ public class CommonFish : LifeForm
     private Rigidbody rb;
 
     bool grabbed = false;
+    public bool inPanic = false;
+    bool onRoute = false;
     void Start()
     {
         lastwaypoints = new();
-        if(randomizeStart)
+        if (randomizeStart)
         {
             Vector3 start = mesh.Points[Random.Range(0, mesh.Points.Count - 1)];
             while (start.x < 0) start = mesh.Points[Random.Range(0, mesh.Points.Count - 1)];
@@ -45,13 +47,38 @@ public class CommonFish : LifeForm
 
         if (grabbed) return;
 
-        if(rb.angularVelocity.magnitude > 1f)
+        if (rb.angularVelocity.magnitude > 1f)
         {
-            rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, Vector3.zero, Time.deltaTime* rotationSpeed);
+            rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, Vector3.zero, Time.deltaTime * rotationSpeed);
             return;
         }
+        if (inPanic)
+        {
+            StartCoroutine(FollowPath());
+            inPanic = false;
+            return;
+        }else if (onRoute)
+        {
+            
+            return ;
+        }
+        else
+        {
+            //print("Navegando pela mesha");
+            NavigateThroughMesh();
+        }
 
+       
+        
+    }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+    }
+
+    private void NavigateThroughMesh()
+    {
         if (Vector3.Distance(targetLocation, transform.position) <= .1f)
         {
             rb.velocity = Vector3.zero;
@@ -62,13 +89,35 @@ public class CommonFish : LifeForm
         else
         {
             rb.velocity = (targetLocation - transform.position).normalized * swimSpeed * Time.deltaTime;
-            rb.rotation = Quaternion.Lerp(rb.rotation, Quaternion.LookRotation(targetLocation- transform.position), Time.deltaTime * rotationSpeed);
+            rb.rotation = Quaternion.Lerp(rb.rotation, Quaternion.LookRotation(targetLocation - transform.position), Time.deltaTime * rotationSpeed);
         }
-        
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private IEnumerator FollowPath()
     {
-        
+        onRoute = true;
+        var path = mesh.FindPath(targetLocation, waypoints[0]);
+        var current = 0;
+        while(current < path.Count)
+        {
+            //print("OnRoute");
+            var currentPoint = path[current];
+            if(Vector3.Distance(currentPoint, transform.position) <= .25f)
+            {
+                //print("vou para o ponto: " + (current + 1));
+                rb.velocity = Vector3.zero;
+                current++;
+            }
+            else
+            {
+                rb.velocity = (currentPoint - transform.position).normalized * swimSpeed * Time.deltaTime * 5;
+                rb.rotation = Quaternion.Lerp(rb.rotation, Quaternion.LookRotation(currentPoint - transform.position), Time.deltaTime * rotationSpeed * 5) ;
+            }
+            yield return null;
+        }
+        onRoute = false;
+        inPanic = false;
+        targetLocation = path[current - 1];
+        print(targetLocation.ToString());
     }
 }
