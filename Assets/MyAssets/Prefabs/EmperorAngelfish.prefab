@@ -1923,7 +1923,7 @@ GameObject:
   - component: {fileID: 8423214029188479491}
   m_Layer: 0
   m_Name: EmperorAngelfish
-  m_TagString: Untagged
+  m_TagString: Fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1967,7 +1967,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.09, z: -0.07}
 --- !u!136 &3484516296596276504
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1987,10 +1987,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.10677104
-  m_Height: 0.36234435
+  m_Radius: 0.09916363
+  m_Height: 0.36731148
   m_Direction: 2
-  m_Center: {x: 0.037020113, y: 0.06383014, z: 0.08842011}
+  m_Center: {x: -0.007801032, y: 0.065485574, z: -0.066391185}
 --- !u!95 &1111227101691485604
 Animator:
   serializedVersion: 5
@@ -2029,10 +2029,14 @@ MonoBehaviour:
   alreadyScanned: 0
   scanProgress: 0
   onScan: 0
-  swimSpeed: 2
+  swimSpeed: 20
   rotationSpeed: 6
-  biomaArea: {fileID: 0}
-  targetPosition: {x: 0, y: 0, z: 0}
+  randomizeStart: 1
+  waypoints: []
+  lastwaypoints: []
+  targetLocation: {x: 0, y: 0, z: 0}
+  mesh: {fileID: 0}
+  inPanic: 0
 --- !u!54 &8423214029188479491
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2057,7 +2061,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 64
   m_CollisionDetection: 2
 --- !u!1 &5966558162341566971

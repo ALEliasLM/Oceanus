@@ -148,12 +148,22 @@ public class AI_Spectrum : MonoBehaviour
 
     IEnumerator ReadMessages()
     {
+        var readMessage = false;
         while (true)
         {
-            if (newMessages.Count > 0 && !speaker.IsSpeaking)
+            if (newMessages.Count > 0 && !speaker.IsSpeaking && !readMessage)
             {
+                readMessage = true;
                 speaker.Speak(newMessages[0]);
+                string[] tex = { "L.A.R.A.", newMessages[0] };
                 newMessages.Remove(newMessages[0]);
+                
+                StartCoroutine(PlayerCanvas.instance.WriteText(tex));
+            }else if (readMessage)
+            {
+                PlayerCanvas.instance.CloseText();
+                readMessage = false;
+                yield return new WaitForSeconds(1.5f);
             }
 
             yield return null;

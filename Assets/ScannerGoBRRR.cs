@@ -20,8 +20,6 @@ public class ScannerGoBRRR : MonoBehaviour
 
     void Start()
     {
-        anim = GetComponent<Animator>();
-        anim.enabled = false;
     }
 
     // Update is called once per frame

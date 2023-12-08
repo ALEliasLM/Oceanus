@@ -3,7 +3,27 @@ guid: b406763491895394faec0aa2ebf22dde
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Coral2
+    second: {fileID: 2100000, guid: 575ed059daac410408fdb39b64a81128, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: f19722c428091464197924f932178dd0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: areia
+    second: {fileID: 2100000, guid: c4cd8553fe9c12c4da43d72ca7c370a6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: siderastrea
+    second: {fileID: 2100000, guid: 22053af8fc898bf4386933f0b8202bc0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

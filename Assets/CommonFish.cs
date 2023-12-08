@@ -25,6 +25,7 @@ public class CommonFish : LifeForm
     bool onRoute = false;
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         lastwaypoints = new();
         if (randomizeStart)
         {
@@ -37,7 +38,7 @@ public class CommonFish : LifeForm
             transform.position = waypoints[0];
         }
         targetLocation = transform.position;
-        rb = GetComponent<Rigidbody>();
+        
     }
 
     // Update is called once per frame
@@ -46,7 +47,6 @@ public class CommonFish : LifeForm
         base.Update();
 
         if (grabbed) return;
-
         if (rb.angularVelocity.magnitude > 1f)
         {
             rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, Vector3.zero, Time.deltaTime * rotationSpeed);

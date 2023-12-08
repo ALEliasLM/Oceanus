@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 5749413709810589699}
   m_Layer: 0
   m_Name: ClownFish
-  m_TagString: Untagged
+  m_TagString: Fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,7 +157,7 @@ Transform:
   m_GameObject: {fileID: 1990500970224495511}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 16.7, y: -12.49, z: 4.25}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4662782189693504941}
@@ -235,7 +235,8 @@ MonoBehaviour:
   swimSpeed: 20
   rotationSpeed: 3
   randomizeStart: 1
-  waypoints: []
+  waypoints:
+  - {x: 8, y: 1, z: 19}
   lastwaypoints: []
   targetLocation: {x: 0, y: 0, z: 0}
   mesh: {fileID: 0}

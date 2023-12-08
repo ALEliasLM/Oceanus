@@ -15,6 +15,7 @@ public class Recycler : MonoBehaviour
     {
         sparks.Stop();
         startPos = joint.transform.localEulerAngles;
+        print(startPos);
     }
 
     // Update is called once per frame
@@ -45,11 +46,13 @@ public class Recycler : MonoBehaviour
             while (audio.isPlaying) yield return null;
             joint.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
             sparks.Stop();
-            print(Vector3.Distance(startPos, joint.transform.localEulerAngles));
+            
             while(Vector3.Distance(startPos, joint.transform.localEulerAngles) > .5f)
             {
-                joint.transform.localEulerAngles = Vector3.Lerp(joint.transform.localEulerAngles, startPos, Time.deltaTime * 10);
-                yield return null;
+                Vector3 actual = new Vector3(joint.transform.localEulerAngles.x, 0 ,0);
+
+                joint.transform.localEulerAngles = Vector3.Lerp(actual, startPos, Time.deltaTime * 10);
+                yield return new WaitForSeconds(1);
             }
             
             currentCoroutine = null;

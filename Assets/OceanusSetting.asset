@@ -20,82 +20,18 @@ MonoBehaviour:
     isPrivate: 1
     createdAt: 2023-10-06T11:51:55-0700
     trainingStatus: 1
-    lastTrainDuration: 0
-    lastTrainedAt: 1969-12-31T16:00:00-0800
-    nextTrainAt: 1969-12-31T16:00:00-0800
-    intents: []
+    lastTrainDuration: 31
+    lastTrainedAt: 2023-12-08T06:48:51-0800
+    nextTrainAt: 2023-12-08T06:48:20-0800
+    intents:
+    - id: 2570102966478620
+      name: Talk_With_Lara
+      entities: []
     entities: []
     traits: []
     versionTags: []
     voices:
-    - name: Cael
-      locale: en_US
-      gender: male
-      styles:
-      - default
-      - soft
-      - formal
-      - fast
-      - projected
-    - name: Cam
-      locale: en_US
-      gender: male
-      styles:
-      - default
-      - soft
-      - formal
-      - fast
-      - projected
-    - name: Carl
-      locale: en_US
-      gender: male
-      styles:
-      - default
-      - soft
-      - formal
-      - fast
-      - projected
-    - name: Charlie
-      locale: en_US
-      gender: male
-      styles:
-      - default
-      - soft
-      - fast
-      - projected
-    - name: Cody
-      locale: en_US
-      gender: male
-      styles:
-      - default
-      - soft
-      - formal
-      - fast
-      - projected
-    - name: Connor
-      locale: en_US
-      gender: male
-      styles:
-      - default
-      - soft
-      - formal
-      - fast
-      - projected
-    - name: Cooper
-      locale: en_US
-      gender: male
-      styles:
-      - default
-      - soft
-      - formal
-      - fast
-      - projected
-    - name: Prospector
-      locale: en_US
-      gender: male
-      styles:
-      - default
-    - name: Railey
+    - name: wit/Rebecca
       locale: en_US
       gender: female
       styles:
@@ -104,34 +40,15 @@ MonoBehaviour:
       - formal
       - fast
       - projected
-    - name: Rebecca
+    - name: wit/Charlie
       locale: en_US
-      gender: female
+      gender: male
       styles:
       - default
       - soft
-      - formal
       - fast
       - projected
-    - name: Remi
-      locale: en_US
-      gender: female
-      styles:
-      - default
-      - soft
-      - formal
-      - fast
-      - projected
-    - name: Rubie
-      locale: en_US
-      gender: female
-      styles:
-      - default
-      - soft
-      - formal
-      - fast
-      - projected
-    - name: Vampire
+    - name: wit/Cooper
       locale: en_US
       gender: male
       styles:
@@ -140,7 +57,192 @@ MonoBehaviour:
       - formal
       - fast
       - projected
-    - name: Colin
+    - name: wit/Vampire
+      locale: en_US
+      gender: male
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Prospector
+      locale: en_US
+      gender: male
+      styles:
+      - default
+    - name: wit/Cody
+      locale: en_US
+      gender: male
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Remi
+      locale: en_US
+      gender: female
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Cam
+      locale: en_US
+      gender: male
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Connor
+      locale: en_US
+      gender: male
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Railey
+      locale: en_US
+      gender: female
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Cael
+      locale: en_US
+      gender: male
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Carl
+      locale: en_US
+      gender: male
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Rubie
+      locale: en_US
+      gender: female
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Overconfident
+      locale: en_US
+      gender: male
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Disaffected
+      locale: en_US
+      gender: female
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Hollywood
+      locale: en_US
+      gender: female
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Trendy
+      locale: en_US
+      gender: female
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Cartoon Baby
+      locale: en_US
+      gender: nonbinary
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Surfer
+      locale: en_US
+      gender: male
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Southern Accent
+      locale: en_US
+      gender: male
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Kenyan Accent
+      locale: en_US
+      gender: female
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Cartoon Kid
+      locale: en_US
+      gender: female
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Cartoon Villain
+      locale: en_US
+      gender: female
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Rosie
+      locale: en_CA
+      gender: female
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Colin
       locale: en_CA
       gender: male
       styles:
@@ -149,9 +251,45 @@ MonoBehaviour:
       - formal
       - fast
       - projected
-    - name: Rosie
-      locale: en_CA
+    - name: wit/Pirate
+      locale: en_GB
+      gender: male
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/British Butler
+      locale: en_GB
+      gender: male
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Whimsical
+      locale: en_GB
       gender: female
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Wizard
+      locale: en_GB
+      gender: male
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: wit/Cockney Accent
+      locale: en_GB
+      gender: nonbinary
       styles:
       - default
       - soft
