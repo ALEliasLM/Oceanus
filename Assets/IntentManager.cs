@@ -7,18 +7,14 @@ using UnityEngine;
 
 public class IntentManager : MonoBehaviour
 {
-    AppVoiceExperience voiceRecognizer;
     AppDictationExperience DRecognizer;
     // Start is called before the first frame update
     void Start()
     {
         
-        voiceRecognizer = GetComponent<AppVoiceExperience>();
         DRecognizer = GetComponent<AppDictationExperience>();
 
-        voiceRecognizer.VoiceEvents.OnPartialResponse.AddListener(DetectIntent);
-        DRecognizer.DictationEvents.OnResponse.AddListener(DetectIntent);
-        DRecognizer.DictationEvents.OnFullTranscription.AddListener((string s) => print(s));
+        DRecognizer.DictationEvents.OnFullTranscription.AddListener((string s) => print("TRANSCRICAO: "+s));
     }
 
     private void DetectIntent(WitResponseNode response)
@@ -31,9 +27,5 @@ public class IntentManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            voiceRecognizer.Activate();
-        }
     }
 }

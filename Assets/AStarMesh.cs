@@ -311,6 +311,7 @@ public class AStarMesh : MonoBehaviour
 
     public Vector3 GetNewRandomDirection(Vector3 pos)
     {
+        pos = new Vector3(Mathf.Abs(pos.x) - transform.position.x, Mathf.Abs(pos.y) - transform.position.y, Mathf.Abs(pos.z) - transform.position.z);
         var neighbors = GetNeighbors(pos);
         if (neighbors.Count == 0) print(pos);
         return neighbors[Random.Range(0, neighbors.Count-1)];

@@ -22,7 +22,7 @@ public class Scanner : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Fish"))
+        if (other.CompareTag("LifeForm"))
         {
             var v = other.GetComponent<LifeForm>();
             onAnalisis.Add(v);
@@ -33,7 +33,7 @@ public class Scanner : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Fish"))
+        if (other.CompareTag("LifeForm"))
         {
             var v = other.GetComponent<LifeForm>();
             onAnalisis.Remove(v);

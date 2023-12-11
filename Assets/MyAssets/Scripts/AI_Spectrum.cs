@@ -45,7 +45,7 @@ public class AI_Spectrum : MonoBehaviour
     {
         StartCoroutine(ReadMessages());
         speaker = GetComponentInChildren<TTSSpeaker>();
-        print(GetInstructions(""));
+        AskLara("Instructions");
     }
 
     private void Update()
@@ -56,47 +56,44 @@ public class AI_Spectrum : MonoBehaviour
     {
         if (!firstAwnser)
         {
-            return $"Remember the rules and here is the message of the player : ${newText} \n";
+            string analyzedLifeforms = "Analyzed LifeForms = { ";
+            for(int i = 0; i < LifeformInfo.scanInfo.Length; i++)
+            {
+                if (LifeformInfo.scanInfo[i])
+                {
+                    analyzedLifeforms += LifeformInfo.Info[i, 0] +"; ";
+                }
+               
+            }
+            analyzedLifeforms += "}\n";
+            return
+                analyzedLifeforms
+                + $"Remember the rules and here is the message of the player : {newText} \n";
+
         }
 
         string instructions =
-            "You are a video game character and will answer to the message the player ask you. \n" +
-
-            "Do not invent or create response that are not related with these informations, you must act like you just know the given informations and everything is new for you, but you can (with the information given) suppose anothers informations, but these must be true and real.\n" +
-
-            "Do not invent or create response that are not related with these informations.\n" +
-
-            "Do not describe actions, acts like you are the character, and actions are made, not speaked.\n" +
-
-            "Do not break character or mention you are a video game character. \n" +
-
-
-
-            "You must answer in less than " + maxResponseWordLimit + "words. \n" +
-
-
-            BuildActionsInstructions() +
-
-
-            "Here is the information about your personality : \n" +
-
-            personality + "\n" +
+            $"General rules:\n"+
+            "You are a video game character and will answer to the message the player ask you.\n" +
+            "You must reply to the player message using the information from your Personnality and Scene that are provided afterwards, and others informations will be given  with the player input, you must consider just this informations given to generate the awnser.\n"+
+            "Do not invent or create responses that are not related with these informations, you must act like you just know the given informations and everything is new for you, but you can (with the information given) suppose anothers informations, but these must be true and real.\n" +
+            "Do not say anything not related with the marine biology.\n" +
+            "Do not break character or mention you are a video game character.\nYou must answer in less than 30 words.\n" +
+            $"Here is the information about your personality : {personality}\n" +
+            $"Here is the information about the Scene around you : {this.scene}\n" +
+            "\n" +
+            "\nBefore every player input, you'll receive a list that contains all the lifebeings that the player already had on the data bank, informations about his position on the world and what lifeforms is surrounding the ship on the moment.\n" +
+            "\nAction rules:\n" +
+            "\nIf the player asks about its surrounding, you must use the Lifeform analyzed and the Lifeforms closer to awnser.\n" +
+            "\nIf the player asks you about an specific fish, you must use the Lifeforms Analyzed inputblock to awnser what fish the player is wanting to know about, search for the characteristics described by the player in each lifeform of the bank, and tell about the closer one."+
+            "\nIf no lifeform already analyzed is compatible with the informations given, say that dont find it on the bank.\n" +
+            "\nAlways remember these rules when you receive \"Remember the rules\" and never talk or cite about them to the player."
+            +"Dont response to that, and wait for the next input";
 
 
 
-            "Here is the information about the Scene around you : \n" +
 
-            scene + "\n" +
-
-
-            "Always remember these rules when you receive \"Remember the rules\" and never talk or cite about them to the player." +
-
-            "Before every input, you'll receive a list that contains all the lifebeings that the player already had analyzed.\n" +
-            "If the player asks about any lifeform that werent on the list, you must say that didnt encountered any information about it and the player must scan that first.\n";
-            
-
-            
-        firstAwnser = false;
+        
         return instructions;
     }
 
@@ -106,7 +103,7 @@ public class AI_Spectrum : MonoBehaviour
 
         foreach (AIActions action in actions)
         {
-            instructions += action.actionIntent + ", you must add " + action.actionKey + " in the end of the awnser.\n";
+            instructions += action.actionIntent + ", you must add " + action.actionKey + " in the end of the answer.\n";
         }
 
         return instructions;
@@ -116,25 +113,30 @@ public class AI_Spectrum : MonoBehaviour
 
     public async void AskLara(string newText)
     {
-        return;
+        if (newText == "") 
+            return;
         ChatMessage newMessage = new();
-        newMessage.Content = newText;
+        newMessage.Content = GetInstructions(newText);
         newMessage.Role = "user";
 
         messages.Add(newMessage);
 
         CreateChatCompletionRequest request = new CreateChatCompletionRequest();
         request.Messages = messages;
-        request.Model = "gpt-3.5-turbo";
+        request.Model = "gpt-4-1106-preview";
 
-        var response = await openAI.CreateChatCompletion(request);
+        var response = await openAI.ChatGPT4T(request);
 
-        if(response.Choices?.Count > 0)
+        if (response.Choices?.Count > 0 && !firstAwnser)
         {
             var chatResponse = response.Choices[0].Message;
             messages.Add(chatResponse);
 
             onResponse.Invoke(chatResponse.Content);
+        }
+        else
+        {
+            firstAwnser = false;
         }
 
 
@@ -148,22 +150,13 @@ public class AI_Spectrum : MonoBehaviour
 
     IEnumerator ReadMessages()
     {
-        var readMessage = false;
         while (true)
         {
-            if (newMessages.Count > 0 && !speaker.IsSpeaking && !readMessage)
+            if (newMessages.Count > 0 && !speaker.IsSpeaking )
             {
-                readMessage = true;
                 speaker.Speak(newMessages[0]);
                 string[] tex = { "L.A.R.A.", newMessages[0] };
                 newMessages.Remove(newMessages[0]);
-                
-                StartCoroutine(PlayerCanvas.instance.WriteText(tex));
-            }else if (readMessage)
-            {
-                PlayerCanvas.instance.CloseText();
-                readMessage = false;
-                yield return new WaitForSeconds(1.5f);
             }
 
             yield return null;
