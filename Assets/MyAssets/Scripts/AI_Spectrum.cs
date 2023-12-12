@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class AI_Spectrum : MonoBehaviour
 {
@@ -38,19 +39,29 @@ public class AI_Spectrum : MonoBehaviour
     public List<AIActions> actions = new List<AIActions>();
 
 
+    public Image LaraRing;
+    public Color OnSleepColor;
+    public Color OnListeningColor;
+    public Color OnAwaitColor;
+    public Color OnAnswerColor;
+    Color currentColor;
 
-
+    Animator anim;
     // Start is called before the first frame update
     void Start()
     {
+        currentColor = OnSleepColor;
+        LaraRing.color = currentColor;
         StartCoroutine(ReadMessages());
         speaker = GetComponentInChildren<TTSSpeaker>();
+        anim = GetComponent<Animator>();
         AskLara("Instructions");
     }
 
     private void Update()
     {
-        
+        LaraRing.color = Color.Lerp(LaraRing.color, currentColor, Time.deltaTime * 10);
+        //if(!speaker.IsSpeaking) anim.SetInteger("State", 0);
     }
     private string GetInstructions(string newText)
     {
@@ -113,8 +124,14 @@ public class AI_Spectrum : MonoBehaviour
 
     public async void AskLara(string newText)
     {
-        if (newText == "") 
+        if (newText == "")
+        {
+            anim.SetInteger("State", 0);
+            currentColor = OnSleepColor;
             return;
+        }
+           
+        currentColor = OnAnswerColor;
         ChatMessage newMessage = new();
         newMessage.Content = GetInstructions(newText);
         newMessage.Role = "user";
@@ -124,9 +141,11 @@ public class AI_Spectrum : MonoBehaviour
         CreateChatCompletionRequest request = new CreateChatCompletionRequest();
         request.Messages = messages;
         request.Model = "gpt-4-1106-preview";
-
+        currentColor = OnAwaitColor;
+        anim.SetInteger("State", 2);
         var response = await openAI.ChatGPT4T(request);
-
+        currentColor = OnAnswerColor;
+        anim.SetInteger("State", 3);
         if (response.Choices?.Count > 0 && !firstAwnser)
         {
             var chatResponse = response.Choices[0].Message;
@@ -157,9 +176,24 @@ public class AI_Spectrum : MonoBehaviour
                 speaker.Speak(newMessages[0]);
                 string[] tex = { "L.A.R.A.", newMessages[0] };
                 newMessages.Remove(newMessages[0]);
+                anim.SetInteger("State", 3);
+                currentColor = OnAnswerColor;
             }
 
             yield return null;
         }
+    }
+
+    public void ChangeColor()
+    {
+        currentColor = OnListeningColor;
+        anim.SetInteger("State", 1);
+        
+    }
+
+    public void SetAnimation(int i)
+    {
+        if (currentColor == OnListeningColor || currentColor == OnAwaitColor) return;
+        anim.SetInteger("State", i);
     }
 }
